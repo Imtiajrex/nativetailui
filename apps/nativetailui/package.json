@@ -4,10 +4,24 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Imtiaj Bin Aoual",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "react-native",
+    "ui",
+    "tailwindcss",
+    "tailwind",
+    "tailwindcss-react-native",
+    "twrnc",
+    "tailwind-react-native",
+    "tailwind-rn"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Imtiajrex/nativetailui.git"
+  },
   "peerDependencies": {
     "class-variance-authority": "^0.7.0",
     "expo-checkbox": "^2.7.0",
