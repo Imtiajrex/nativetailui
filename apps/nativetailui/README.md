@@ -1,3 +1,3 @@
 # NativeTailUI
 
-This is NativeTailUI turborepo, tailwind ui for react-native
+This is the nativetailui package
