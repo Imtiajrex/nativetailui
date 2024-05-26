@@ -1,9 +1,12 @@
-import { View, Text, Button } from 'nativetailui'
+import { View, Text, Button, useTwContext } from 'nativetailui'
 import { useState } from 'react'
 import { AnimatePresence } from 'moti'
 
+const theme1 = require('../tailwind.config')
+const theme2 = require('../tailwind.config.2')
 export default function Index() {
     const [open, setOpen] = useState(false)
+    const { setTheme } = useTwContext()
     return (
         <View className='p-4 pt-12 items-center justify-center gap-4 bg-background max-w-2xl mx-auto w-full'>
             <Text className='text-2xl' >Hello, world!</Text>
@@ -17,6 +20,10 @@ export default function Index() {
                 className='text-black  scale-1 hover:scale-1.05 active:scale-0.95'
                 onPress={() => {
                     setOpen(!open)
+                    setTheme(
+                        open ? theme1 : theme2
+                    )
+
                 }}
             >
                 Click me!

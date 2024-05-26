@@ -1,15 +1,15 @@
 import React, { useMemo } from "react";
 import {
     ActivityIndicator,
-    Text
 } from "../../primitives";
 import { getTWColor, separateTextClasses, useTw } from "../../tw";
+import { Text } from "../text";
 
 import { cva, type VariantProps } from "class-variance-authority";
-import { MotiPressable, MotiPressableProps, MotiPressableTransitionProp } from "moti/interactions";
+import { MotiPressable, MotiPressableProps } from "moti/interactions";
 
 const buttonVariants = cva(
-    "flex-row gap-2  items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+    "flex-row gap-2  items-center justify-center rounded-full text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
             variant: {
@@ -71,8 +71,8 @@ const Button = ({
         size,
         className,
         disabled: isDisabled,
-    }), [variant, size, className, isDisabled]);
-    const { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses } = useMemo(() => separateTextClasses(vairantClass), [vairantClass]);
+    }), [variant, size, className, isDisabled, tw.memoBuster]);
+    const { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses } = useMemo(() => separateTextClasses(vairantClass), [vairantClass, tw.memoBuster]);
     const isText = typeof children === "string" || text;
     const animate = useMemo(
         () => ({ hovered, pressed }: {
@@ -87,19 +87,22 @@ const Button = ({
                 return tw`${hoverClasses}`
             }
             return tw`${nonStateClasses}`
+
         },
         [
             activeClasses,
             hoverClasses,
-            nonStateClasses
+            nonStateClasses,
+            tw.memoBuster,
+            tw
         ]
     );
     return (
         <MotiPressable
-            style={tw.style(otherClasses)}
             disabled={disabled || loading}
-            {...props}
             animate={animate}
+            style={tw`${otherClasses}`}
+            {...props}
         >
             {leftElement}
             {loading && (
@@ -109,7 +112,7 @@ const Button = ({
                 />
             )}
             {isText && (
-                <Text style={tw.style("text-md text-center font-medium ", textClasses)}>
+                <Text style={tw.style("text-sm text-center font-medium ", textClasses)}>
                     {children || text}
                 </Text>
             )}
@@ -122,3 +125,4 @@ const Button = ({
 export {
     Button
 };
+

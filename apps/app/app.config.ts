@@ -49,7 +49,6 @@ export default {
 			policy: "appVersion",
 		},
 		updates: {
-			url: "https://u.expo.dev/0a1cf4f9-ca4b-4499-b2da-ae4a200510e9",
 		},
 		experiments: {
 			typedRoutes: true,

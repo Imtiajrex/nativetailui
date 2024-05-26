@@ -4,11 +4,11 @@ import {
 	ActivityIndicator,
 	FlatList,
 	FlatListProps,
-	Text,
 	TouchableOpacity,
-	View
 } from "./primitives";
 import { getTWColor, useTw } from "./tw";
+import { useCallback, useMemo } from "react";
+import { Text, View } from "..";
 
 
 const Badge = ({
@@ -206,7 +206,6 @@ const TabButton = ({
 	);
 };
 
-import { useCallback, useMemo } from "react";
 const List = <T extends any>({
 	loadMore,
 	isLoading,
