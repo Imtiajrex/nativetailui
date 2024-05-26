@@ -1,10 +1,9 @@
 {
   "name": "nativetailui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.ts",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "Imtiaj Bin Aoual",
   "license": "MIT",
   "keywords": [
@@ -41,8 +40,10 @@
     "@expo/vector-icons": "^14.0.2",
     "@miblanchard/react-native-slider": "^2.6.0",
     "class-variance-authority": "^0.7.0",
+    "moti": "^0.29.0",
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-iconify": "^1.0.2",
+    "twrnc-next": "^4.2.1",
     "zustand": "^4.5.2"
   }
 }

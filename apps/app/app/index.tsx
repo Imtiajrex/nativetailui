@@ -1,6 +1,9 @@
 import { View, Text, Button } from 'nativetailui'
+import { useState } from 'react'
+import { AnimatePresence } from 'moti'
 
 export default function Index() {
+    const [open, setOpen] = useState(false)
     return (
         <View className='p-4 pt-12 items-center justify-center gap-4 bg-background max-w-2xl mx-auto w-full'>
             <Text className='text-2xl' >Hello, world!</Text>
@@ -11,10 +14,20 @@ export default function Index() {
                 <Text className='text-lg'>This is a card</Text>
             </View>
             <Button
-
+                className='text-black  scale-1 hover:scale-1.05 active:scale-0.95'
+                onPress={() => {
+                    setOpen(!open)
+                }}
             >
                 Click me!
             </Button>
+            <AnimatePresence
+            >
+                <View
+                    className={`w-full h-[${open ? '96' : '24'
+                        }] bg-primary rounded-xl mb-2 in:-translate-y-44 translate-y-0 out:translate-y-44 `}
+                />
+            </AnimatePresence>
         </View>
     )
 }

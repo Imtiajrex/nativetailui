@@ -1,11 +1,11 @@
 // lib/tailwind.js
-import { TailwindFn, create, useDeviceContext } from "twrnc";
-import { create as createStore } from 'zustand'
+import { TailwindFn, create } from "twrnc-next";
+import { create as createStore } from 'zustand';
 
 // create the customized version...
 
 // ... and then this becomes the main function your app uses
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 type ContextType = {
 	tw: TailwindFn | null;
 	theme: any | null;
@@ -41,7 +41,13 @@ export const separateTextClasses = (className: string) => {
 	const classes = className.split(" ");
 	const textClasses = classes.filter((c) => c.startsWith("text-")).join(" ");
 	const otherClasses = classes.filter((c) => !c.startsWith("text-")).join(" ");
-	return { textClasses, otherClasses };
+	const hoverClasses = classes.filter((c) => c.startsWith("hover:")).map((c) => c.replace("hover:", "")).join(" ");
+	const activeClasses = classes.filter((c) => c.startsWith("active:")).map((c) => c.replace("active:", "")).join(" ");
+	const nonStateClasses = classes.filter((c) => !c.startsWith("hover:") && !c.startsWith("active:")).join(" ");
+	const inClasses = classes.filter((c) => c.startsWith("in:")).map((c) => c.replace("in:", "")).join(" ");
+	const outClasses = classes.filter((c) => c.startsWith("out:")).map((c) => c.replace("out:", "")).join(" ");
+
+	return { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses };
 };
 export const useTw = () => {
 	const twContext = useContext(ThemeContext);

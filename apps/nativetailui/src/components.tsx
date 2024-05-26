@@ -6,111 +6,11 @@ import {
 	FlatListProps,
 	Text,
 	TouchableOpacity,
-	TouchableOpacityProps,
-	View,
+	View
 } from "./primitives";
-import { getTWColor, separateTextClasses, useTw } from "./tw";
+import { getTWColor, useTw } from "./tw";
 
-import { cva, type VariantProps } from "class-variance-authority";
 
-const buttonVariants = cva(
-	"flex-row gap-2  items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-	{
-		variants: {
-			variant: {
-				default: "bg-primary text-card shadow ",
-				destructive: "bg-red-500 text-card shadow-sm ",
-				outline: "border border-primary text-foreground bg-black/0  ",
-				secondary: "bg-secondary text-foreground shadow-sm ",
-				ghost: "",
-				link: "text-primary underline-offset-4 ",
-				card: " bg-card shadow-sm",
-			},
-			size: {
-				default: "h-12 px-4 py-2",
-				sm: "h-8 px-3 text-xs",
-				lg: "h-10 px-8",
-				icon: "h-9 w-9",
-			},
-			disabled: {
-				true: "opacity-80",
-			},
-		},
-		defaultVariants: {
-			variant: "default",
-			size: "default",
-		},
-	}
-);
-type ButtonProps = TouchableOpacityProps &
-	VariantProps<typeof buttonVariants> & {
-		text?: string;
-		disabled?: boolean;
-		isLoading?: boolean;
-		textClass?: string;
-		leftElement?: React.ReactNode;
-		rightElement?: React.ReactNode;
-	};
-
-const Button = ({
-	text,
-	children,
-	isLoading,
-	className,
-	disabled,
-	variant,
-	leftElement,
-	rightElement,
-	size,
-	...props
-}: ButtonProps) => {
-	const tw = useTw();
-	const [localLoading, setLocalLoading] = React.useState(false);
-
-	const loading = isLoading || localLoading;
-
-	const isDisabled = disabled || loading;
-	const vairantClass = buttonVariants({
-		variant,
-		size,
-		className,
-		disabled: isDisabled,
-	});
-	const { textClasses, otherClasses } = separateTextClasses(vairantClass);
-	const isText = typeof children === "string" || text;
-	return (
-		<TouchableOpacity
-			style={tw.style(otherClasses)}
-			disabled={disabled || loading}
-			{...props}
-			onPress={async (e) => {
-				setLocalLoading(true);
-				try {
-					if (props.onPress) await props.onPress(e);
-				} catch (e) {
-					console.error(e);
-				}
-				setLocalLoading(false);
-			}}
-		>
-			{leftElement}
-			{loading && (
-				<ActivityIndicator
-					className="mr-2 h-5 w-5 "
-					color={getTWColor(textClasses)}
-				/>
-			)}
-			{isText && (
-				<Text style={tw.style("text-md text-center font-medium ", textClasses)}>
-					{children || text}
-				</Text>
-			)}
-
-			{!isText && children}
-			{rightElement}
-		</TouchableOpacity>
-	);
-};
 const Badge = ({
 	text,
 	bgColor = "bg-indigo-500/15",
@@ -368,5 +268,5 @@ const List = <T extends any>({
 		/>
 	);
 };
-export { Badge, Button, Checkbox, Divider, List, Progress };
+export { Badge, Checkbox, Divider, List, Progress };
 

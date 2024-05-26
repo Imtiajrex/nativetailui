@@ -163,10 +163,8 @@ export {
 	FlatList,
 	Image,
 	ScrollView,
-	Text,
 	TextInput,
 	TouchableOpacity,
-	View,
 };
 
 export type {
@@ -175,7 +173,5 @@ export type {
 	ImageProps,
 	ScrollViewProps,
 	TextInputProps,
-	TextProps,
 	TouchableOpacityProps,
-	ViewProps,
 };
