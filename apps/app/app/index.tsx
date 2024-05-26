@@ -17,7 +17,7 @@ export default function Index() {
                 <Text className='text-lg'>This is a card</Text>
             </View>
             <Button
-                className='text-black  scale-1 hover:scale-1.05 active:scale-0.95'
+                className='text-black  scale-100 hover:scale-105 active:scale-95'
                 onPress={() => {
                     setOpen(!open)
                     setTheme(
@@ -28,13 +28,11 @@ export default function Index() {
             >
                 Click me!
             </Button>
-            <AnimatePresence
-            >
-                <View
-                    className={`w-full h-[${open ? '96' : '24'
-                        }] bg-primary rounded-xl mb-2 in:-translate-y-44 translate-y-0 out:translate-y-44 `}
-                />
-            </AnimatePresence>
+            <View
+                className={`w-full h-[${open ? '96' : '24'
+                    }] bg-primary rounded-xl mb-2 in:-translate-y-44 translate-y-0 out:translate-y-44 `}
+            />
+            <View className={`w-24 h-24 bg-primary rounded-xl mb-2 rotate-${open ? 750 : 0}`} />
         </View>
     )
 }

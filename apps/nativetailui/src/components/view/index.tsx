@@ -14,42 +14,24 @@ const View = forwardRef<NativeView, ViewProps>(
         const tw = useTw();
 
         const { textClasses, otherClasses, inClasses, outClasses, nonStateClasses } = separateTextClasses(className);
-        const isAnimated = !!inClasses || !!outClasses;
-
-
-
-
-        if (isAnimated) {
-            return (
-                <MotiView
-                    from={tw`${inClasses}`}
-                    animate={tw`${nonStateClasses}`}
-
-                    style={tw`${otherClasses}`}
-                    exit={tw`${outClasses}`}
-                    {...props}
-
-                >
-                    {React.Children.map(children, (child) => {
-                        if (typeof child == "string") {
-                            return <Text className={textClasses}>{child}</Text>;
-                        }
-                        return child;
-                    })}
-                </MotiView>
-            )
-        }
-
         return (
-            <NativeView style={tw`${otherClasses}`} {...props} ref={ref}>
+            <MotiView
+                from={tw`${inClasses}`}
+                animate={tw`${nonStateClasses}`}
+                style={tw`${otherClasses}`}
+                exit={tw`${outClasses}`}
+                {...props}
+
+            >
                 {React.Children.map(children, (child) => {
                     if (typeof child == "string") {
                         return <Text className={textClasses}>{child}</Text>;
                     }
                     return child;
                 })}
-            </NativeView>
-        );
+            </MotiView>
+        )
+
     }
 );
 export {

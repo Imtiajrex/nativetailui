@@ -81,10 +81,16 @@ const Button = ({
         }) => {
             "worklet";
             if (pressed) {
-                return tw`${activeClasses}`
+                return tw.style(
+                    nonStateClasses,
+                    activeClasses
+                )
             }
             if (hovered) {
-                return tw`${hoverClasses}`
+                return tw.style(
+                    nonStateClasses,
+                    hoverClasses
+                )
             }
             return tw`${nonStateClasses}`
 

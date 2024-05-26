@@ -42,18 +42,6 @@ export const ThemeProvider = ({
 		</ThemeContext.Provider>
 	);
 };
-export const separateTextClasses = (className: string) => {
-	const classes = className.split(" ");
-	const textClasses = classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
-	const otherClasses = classes.filter((c) => !c.startsWith("text-") || c.startsWith("font-")).join(" ");
-	const hoverClasses = classes.filter((c) => c.startsWith("hover:")).map((c) => c.replace("hover:", "")).join(" ");
-	const activeClasses = classes.filter((c) => c.startsWith("active:")).map((c) => c.replace("active:", "")).join(" ");
-	const nonStateClasses = classes.filter((c) => !c.startsWith("hover:") && !c.startsWith("active:")).join(" ");
-	const inClasses = classes.filter((c) => c.startsWith("in:")).map((c) => c.replace("in:", "")).join(" ");
-	const outClasses = classes.filter((c) => c.startsWith("out:")).map((c) => c.replace("out:", "")).join(" ");
-
-	return { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses };
-};
 export const useTwContext = () => {
 	const twContext = useContext(ThemeContext);
 	if (!twContext.tw) {
@@ -88,3 +76,16 @@ export const getTWColor = (color: string) => {
 };
 export const getTw = () => useTwStore.getState().tw!;
 
+
+export const separateTextClasses = (className: string) => {
+	const classes = className.split(" ");
+	const textClasses = classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
+	const otherClasses = classes.filter((c) => !c.startsWith("text-") || c.startsWith("font-")).join(" ");
+	const hoverClasses = classes.filter((c) => c.startsWith("hover:")).map((c) => c.replace("hover:", "")).join(" ");
+	const activeClasses = classes.filter((c) => c.startsWith("active:")).map((c) => c.replace("active:", "")).join(" ");
+	const nonStateClasses = classes.filter((c) => !c.startsWith("hover:") || !c.startsWith("active:")).join(" ");
+	const inClasses = classes.filter((c) => c.startsWith("in:")).map((c) => c.replace("in:", "")).join(" ");
+	const outClasses = classes.filter((c) => c.startsWith("out:")).map((c) => c.replace("out:", "")).join(" ");
+
+	return { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses };
+};
