@@ -6,20 +6,20 @@ import { getTWColor, separateTextClasses, useTw } from "../../tw";
 import { Text } from "../text";
 
 import { cva, type VariantProps } from "class-variance-authority";
-import { MotiPressable, MotiPressableProps } from "moti/interactions";
+import { MotiPressable, MotiPressableProp, MotiPressableProps } from "moti/interactions";
 
 const buttonVariants = cva(
     "flex-row gap-2  items-center justify-center rounded-full text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
             variant: {
-                default: "bg-primary text-card shadow ",
-                destructive: "bg-red-500 text-card shadow-sm ",
+                default: "bg-primary text-card  ",
+                destructive: "bg-red-500 text-card  ",
                 outline: "border border-primary text-foreground bg-black/0  ",
-                secondary: "bg-secondary text-foreground shadow-sm ",
+                secondary: "bg-secondary text-foreground  ",
                 ghost: "",
                 link: "text-primary underline-offset-4 ",
-                card: " bg-card shadow-sm",
+                card: " bg-card ",
             },
             size: {
                 default: "h-12 px-4 py-2",
@@ -72,42 +72,38 @@ const Button = ({
         className,
         disabled: isDisabled,
     }), [variant, size, className, isDisabled, tw.memoBuster]);
-    const { textClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses } = useMemo(() => separateTextClasses(vairantClass), [vairantClass, tw.memoBuster]);
+    const { textClasses, animatableClasses, nonAnimatableClasses, hoverClasses, activeClasses, nonStateClasses } = useMemo(() => separateTextClasses(vairantClass), [vairantClass, tw.memoBuster]);
     const isText = typeof children === "string" || text;
-    const animate = useMemo(
+    const activeStyle = useMemo(() => tw.style(animatableClasses, activeClasses), [activeClasses, animatableClasses, tw])
+    const hoverStyle = useMemo(() => tw.style(animatableClasses, hoverClasses), [hoverClasses, animatableClasses, tw]);
+    const nonStateStyle = useMemo(() => tw`${animatableClasses}`, [animatableClasses, tw]);
+    const animate: MotiPressableProp = useMemo(
         () => ({ hovered, pressed }: {
             hovered: boolean;
             pressed: boolean;
         }) => {
             "worklet";
+
             if (pressed) {
-                return tw.style(
-                    nonStateClasses,
-                    activeClasses
-                )
+                return activeStyle
             }
             if (hovered) {
-                return tw.style(
-                    nonStateClasses,
-                    hoverClasses
-                )
+                return hoverStyle
             }
-            return tw`${nonStateClasses}`
+            return nonStateStyle
 
         },
         [
-            activeClasses,
-            hoverClasses,
-            nonStateClasses,
-            tw.memoBuster,
-            tw
+            activeStyle,
+            hoverStyle,
+            nonStateStyle,
         ]
     );
     return (
         <MotiPressable
             disabled={disabled || loading}
             animate={animate}
-            style={tw`${otherClasses}`}
+            style={tw`${nonAnimatableClasses}`}
             {...props}
         >
             {leftElement}

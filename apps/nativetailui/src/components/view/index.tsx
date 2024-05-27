@@ -13,13 +13,14 @@ const View = forwardRef<NativeView, ViewProps>(
     ({ className = "", children, ...props }, ref) => {
         const tw = useTw();
 
-        const { textClasses, otherClasses, inClasses, outClasses, nonStateClasses } = separateTextClasses(className);
+        const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses } = separateTextClasses(className);
+        console.log(nonAnimatableClasses)
         return (
             <MotiView
                 from={tw`${inClasses}`}
-                animate={tw`${nonStateClasses}`}
-                style={tw`${otherClasses}`}
+                animate={tw`${animatableClasses}`}
                 exit={tw`${outClasses}`}
+                style={tw`${nonAnimatableClasses}`}
                 {...props}
 
             >

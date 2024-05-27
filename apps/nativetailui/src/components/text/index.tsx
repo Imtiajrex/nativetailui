@@ -10,11 +10,11 @@ const Text = forwardRef<typeof MotiText, TextProps>(
     ({ className = "text-foreground", children, ...props }, ref) => {
         const tw = useTw();
 
-        const { inClasses, outClasses, nonStateClasses } = separateTextClasses(className);
+        const { inClasses, outClasses, animatableClasses } = separateTextClasses(className);
         return (
             <MotiText
                 from={tw`${inClasses}`}
-                animate={tw`${nonStateClasses}`}
+                animate={tw`${animatableClasses}`}
                 exit={tw`${outClasses}`}
                 style={tw.style("text-foreground", className)}
                 {...props}

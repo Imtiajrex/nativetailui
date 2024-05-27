@@ -1,3 +1,4 @@
+const plugin = require("tailwindcss/plugin");
 module.exports = {
 	theme: {
 		screens: {
@@ -18,4 +19,11 @@ module.exports = {
 			},
 		},
 	},
+	plugins: [
+		plugin(({ addUtilities }) => {
+			addUtilities({
+				".container": "max-w-2xl flex-1 mx-auto gap-4 p-4 pt-10 w-full"
+			})
+		})
+	]
 };
