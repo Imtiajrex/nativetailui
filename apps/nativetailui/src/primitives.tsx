@@ -10,7 +10,7 @@ import {
 	TouchableOpacity as NativeTouchableOpacity,
 	View as NativeView,
 } from "react-native";
-import { getTWColor, separateTextClasses, useTw } from "./tw";
+import { getTWColor, separateClasses, useTw } from "./tw";
 type ClassNameType = {
 	className?: string;
 };
@@ -19,7 +19,7 @@ const View = forwardRef<NativeView, ViewProps>(
 	({ className = "", children, ...props }, ref) => {
 		const tw = useTw();
 
-		const { textClasses, otherClasses } = separateTextClasses(className);
+		const { textClasses, otherClasses } = separateClasses(className);
 		return (
 			<NativeView style={tw`${otherClasses}`} {...props} ref={ref}>
 				{React.Children.map(children, (child) => {

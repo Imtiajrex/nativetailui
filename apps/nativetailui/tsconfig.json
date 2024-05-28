@@ -2,6 +2,12 @@
 	"extends": "@repo/typescript-config/base.json",
 	"compilerOptions": {
 		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"],
+			"@components/*": ["components/*"],
+			"@hooks/*": ["hooks/*"],
+			"@utils/*": ["utils/*"],
+		},
 		"jsx": "react-jsx"
 	}
   }

@@ -77,8 +77,21 @@ export const getTWColor = (color: string) => {
 export const getTw = () => useTwStore.getState().tw!;
 
 
-export const separateTextClasses = (className: string) => {
-	const classes = className.split(" ");
+export const separateClasses = (className: string) => {
+	const initialClasses = className.split(" ");
+	const classes: string[] = []
+	initialClasses.forEach((c) => {
+		if (c in predefinedAnimationClasses) {
+			const classValue = predefinedAnimationClasses[
+				c as keyof typeof predefinedAnimationClasses
+			] + " ";
+			console.log("found predefined animation class", classValue)
+
+			classes.push(...classValue.split(' '));
+		} else {
+			classes.push(c)
+		}
+	});
 	const textClasses = classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
 	const otherClasses = classes.filter((c) => !c.startsWith("text-") || !c.startsWith("font-")).join(" ");
 	const animatableClasses = classes.filter((c) => nonAnimatedClassesSet.every((nc) => !c.startsWith(nc))).join(" ");
@@ -91,6 +104,24 @@ export const separateTextClasses = (className: string) => {
 
 	return { textClasses, animatableClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses, nonAnimatableClasses };
 };
+const predefinedAnimationClasses = {
+	"fade-in": "in:opacity-100 opacity-100",
+	"fade-out": "out:opacity-0 opacity-100",
+	"fade-in-up": "in:-translate-y-2 translate-y-0 in:opacity-0 opacity-100",
+	"fade-out-up": "out:-translate-y-2 translate-y-0  opacity-100 out:opacity-0",
+	"fade-in-down": "in:translate-y-2 translate-y-0 in:opacity-0 opacity-100",
+	"fade-out-down": "out:translate-y-2 translate-y-0 opacity-100 out:opacity-0",
+	"fade-in-left": "in:-translate-x-2 translate-x-0 in:opacity-0 opacity-100",
+	"fade-out-left": "out:-translate-x-2 translate-x-100 opacity-100 out:opacity-0",
+	"fade-in-right": "in:translate-x-2 translate-x-0 in:opacity-0 opacity-100",
+	"fade-out-right": "out:translate-x-2 translate-x-100 opacity-100 out:opacity-0",
+	"fade-up-down": "in:-translate-y-2 translate-y-0 in:opacity-0 opacity-100 out:translate-y-2 opacity-100 out:opacity-0",
+	"fade-down-up": "in:translate-y-2 translate-y-0 in:opacity-0 opacity-100 out:-translate-y-2 opacity-100 out:opacity-0",
+	"fade-left-right": "in:-translate-x-2 translate-x-0 in:opacity-0 opacity-100 out:-translate-x-2 translate-x-100 opacity-100 out:opacity-0",
+	"fade-right-left": "in:translate-x-2 translate-x-0 in:opacity-0 opacity-100 out:translate-x-2 translate-x-100 opacity-100 out:opacity-0",
+
+
+} as const
 const nonAnimatedClassesSet = [
 	"justify-",
 	"items-",

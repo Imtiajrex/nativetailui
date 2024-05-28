@@ -2,11 +2,12 @@ import React, { useMemo } from "react";
 import {
     ActivityIndicator,
 } from "../../primitives";
-import { getTWColor, separateTextClasses, useTw } from "../../tw";
+import { getTWColor, useTw } from "../../tw";
 import { Text } from "../text";
 
+import usePressableStyle from "../../hooks/usePressableStyle";
 import { cva, type VariantProps } from "class-variance-authority";
-import { MotiPressable, MotiPressableProp, MotiPressableProps } from "moti/interactions";
+import { MotiPressable, MotiPressableProps } from "moti/interactions";
 
 const buttonVariants = cva(
     "flex-row gap-2  items-center justify-center rounded-full text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -72,33 +73,16 @@ const Button = ({
         className,
         disabled: isDisabled,
     }), [variant, size, className, isDisabled, tw.memoBuster]);
-    const { textClasses, animatableClasses, nonAnimatableClasses, hoverClasses, activeClasses, nonStateClasses } = useMemo(() => separateTextClasses(vairantClass), [vairantClass, tw.memoBuster]);
-    const isText = typeof children === "string" || text;
-    const activeStyle = useMemo(() => tw.style(animatableClasses, activeClasses), [activeClasses, animatableClasses, tw])
-    const hoverStyle = useMemo(() => tw.style(animatableClasses, hoverClasses), [hoverClasses, animatableClasses, tw]);
-    const nonStateStyle = useMemo(() => tw`${animatableClasses}`, [animatableClasses, tw]);
-    const animate: MotiPressableProp = useMemo(
-        () => ({ hovered, pressed }: {
-            hovered: boolean;
-            pressed: boolean;
-        }) => {
-            "worklet";
 
-            if (pressed) {
-                return activeStyle
-            }
-            if (hovered) {
-                return hoverStyle
-            }
-            return nonStateStyle
+    const isText = !!text || typeof children == "string";
+    const {
+        animate,
+        textClasses,
+        nonAnimatableClasses
 
-        },
-        [
-            activeStyle,
-            hoverStyle,
-            nonStateStyle,
-        ]
-    );
+    } = usePressableStyle({
+        className: vairantClass
+    })
     return (
         <MotiPressable
             disabled={disabled || loading}

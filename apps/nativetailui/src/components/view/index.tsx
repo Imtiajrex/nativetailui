@@ -1,26 +1,31 @@
+import useAnimatedStyle, { AnimatedClassProps } from "../../hooks/useAnimatedStyle";
+import { MotiView } from "moti";
 import React, { forwardRef } from "react";
 import {
-    View as NativeView
+    View as NativeView,
+    ViewStyle
 } from "react-native";
-import { separateTextClasses, useTw } from "../../tw";
 import { Text } from "../../..";
-import { MotiView } from "moti";
+import { useTw } from "../../tw";
 
-type ViewProps = React.ComponentProps<typeof NativeView> & {
-    className?: string;
-};
+type ViewProps = React.ComponentProps<typeof NativeView> & AnimatedClassProps<ViewStyle>
 const View = forwardRef<NativeView, ViewProps>(
-    ({ className = "", children, ...props }, ref) => {
+    ({ children, ...props }, ref) => {
         const tw = useTw();
 
-        const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses } = separateTextClasses(className);
-        console.log(nonAnimatableClasses)
+
+        const { from, animate, exit, style, textClasses } = useAnimatedStyle({
+            className: props.className,
+            style: props.style,
+            animate: props.animate,
+            animatedClass: props.animatedClass
+        });
         return (
             <MotiView
-                from={tw`${inClasses}`}
-                animate={tw`${animatableClasses}`}
-                exit={tw`${outClasses}`}
-                style={tw`${nonAnimatableClasses}`}
+                from={from}
+                animate={animate}
+                exit={exit}
+                style={style}
                 {...props}
 
             >
@@ -37,4 +42,5 @@ const View = forwardRef<NativeView, ViewProps>(
 );
 export {
     View
-}
+};
+

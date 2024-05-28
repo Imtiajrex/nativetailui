@@ -1,22 +1,28 @@
+import useAnimatedStyle, { AnimatedClassProps } from "../../hooks/useAnimatedStyle";
 import { MotiText } from "moti";
 import React, { forwardRef } from "react";
-import { separateTextClasses, useTw } from "../../tw";
+import { TextStyle } from "react-native";
+import { useTw } from "../../tw";
 
 
-type TextProps = React.ComponentProps<typeof MotiText> & {
-    className?: string;
-};
+type TextProps = React.ComponentProps<typeof MotiText> & AnimatedClassProps<TextStyle>
 const Text = forwardRef<typeof MotiText, TextProps>(
     ({ className = "text-foreground", children, ...props }, ref) => {
         const tw = useTw();
 
-        const { inClasses, outClasses, animatableClasses } = separateTextClasses(className);
+        const { from, animate, exit, style } = useAnimatedStyle({
+            className: className,
+            style: props.style,
+            animate: props.animate,
+            animatedClass: props.animatedClass
+        })
         return (
             <MotiText
-                from={tw`${inClasses}`}
-                animate={tw`${animatableClasses}`}
-                exit={tw`${outClasses}`}
-                style={tw.style("text-foreground", className)}
+
+                from={from}
+                animate={animate}
+                exit={exit}
+                style={style}
                 {...props}
                 ref={ref}
             >
@@ -28,3 +34,4 @@ const Text = forwardRef<typeof MotiText, TextProps>(
 export {
     Text
 };
+
