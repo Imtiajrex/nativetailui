@@ -1,11 +1,11 @@
 // lib/tailwind.js
-import { TailwindFn, create } from "twrnc-next";
 import { create as createStore } from 'zustand';
 
 // create the customized version...
 
 // ... and then this becomes the main function your app uses
 import { createContext, useContext, useEffect } from "react";
+import { TailwindFn, create } from './parser';
 type ContextType = {
 	tw: TailwindFn | null;
 	theme: any | null;

@@ -1,6 +1,6 @@
 {
   "name": "nativetailui",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "index.ts",
   "scripts": {},
@@ -43,7 +43,6 @@
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-iconify": "^1.0.2",
     "react-native-reanimated": "^3.11.0",
-    "twrnc-next": "^4.2.4",
     "zustand": "^4.5.2"
   }
 }
