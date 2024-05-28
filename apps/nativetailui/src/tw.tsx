@@ -72,7 +72,7 @@ export const getTWColor = (color: string) => {
 export const getTw = () => useTwStore.getState().tw!;
 
 
-export const separateClasses = (className: string) => {
+export const separateClasses = (className: string, isText = false) => {
 	const initialClasses = className.split(" ");
 	const classes: string[] = []
 	initialClasses.forEach((c) => {
@@ -86,8 +86,8 @@ export const separateClasses = (className: string) => {
 			classes.push(c)
 		}
 	});
-	const textClasses = classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
-	const otherClasses = classes.filter((c) => !c.startsWith("text-") || !c.startsWith("font-")).join(" ");
+	const textClasses = isText ? classes.join(' ') : classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
+	const otherClasses = isText ? classes.join(' ') : classes.filter((c) => !c.startsWith("text-") || !c.startsWith("font-")).join(" ");
 	const animatableClasses = classes.filter((c) => nonAnimatedClassesSet.every((nc) => !c.startsWith(nc))).join(" ");
 	const hoverClasses = classes.filter((c) => c.startsWith("hover:")).map((c) => c.replace("hover:", "")).join(" ");
 	const activeClasses = classes.filter((c) => c.startsWith("active:")).map((c) => c.replace("active:", "")).join(" ");
@@ -95,8 +95,10 @@ export const separateClasses = (className: string) => {
 	const inClasses = classes.filter((c) => c.startsWith("in:")).map((c) => c.replace("in:", "")).join(" ");
 	const outClasses = classes.filter((c) => c.startsWith("out:")).map((c) => c.replace("out:", "")).join(" ");
 	const nonAnimatableClasses = classes.filter((c) => nonAnimatedClassesSet.some((nc) => c.startsWith(nc))).join(" ");
+	const groupHoverClasses = classes.filter((c) => c.startsWith("group-hover:")).map((c) => c.replace("group-hover:", "")).join(" ");
+	const groupActiveClasses = classes.filter((c) => c.startsWith("group-active:")).map((c) => c.replace("group-active:", "")).join(" ");
 
-	return { textClasses, animatableClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses, nonAnimatableClasses };
+	return { textClasses, animatableClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses, nonAnimatableClasses, groupHoverClasses, groupActiveClasses };
 };
 const predefinedAnimationClasses = {
 	"fade-in": "in:opacity-100 opacity-100",
@@ -124,6 +126,4 @@ const nonAnimatedClassesSet = [
 	"space-",
 	"p-",
 	"m-",
-	"text-",
-	"font-",
 ]

@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'moti'
-import { Button, Text, View } from 'nativetailui'
+import { Button, Pressable, Text, View } from 'nativetailui'
 import { useEffect } from 'react'
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated'
 import { create } from 'zustand'
@@ -31,6 +31,16 @@ export default function Index() {
                 >
                     Click me!
                 </Button>
+                <Pressable className='flex-row items-center gap-2 bg-blue-500 rounded-xl px-6 py-4 hover:scale-105 scale-100 active:scale-95 hover:bg-blue-400 active:bg-white'>
+                    <View className='w-8 h-8 justify-center items-center bg-orange-200 rounded-full'>
+                        <View className='bg-white w-0 h-6 rounded-full  group-hover:w-3 group-active:w-6 ' />
+                    </View>
+                    <Text
+                        className='text-white group-active:text-black'
+                    >
+                        Press Me!
+                    </Text>
+                </Pressable>
 
                 <Presence />
             </View>

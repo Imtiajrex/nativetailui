@@ -10,7 +10,7 @@ const Text = forwardRef<typeof MotiText, TextProps>(
     ({ className = "text-foreground", children, ...props }, ref) => {
         const tw = useTw();
 
-        const { from, animate, exit, style } = useAnimatedStyle({
+        const { from, animate, exit, style, state } = useAnimatedStyle({
             className: className,
             style: props.style,
             animate: props.animate,
@@ -18,7 +18,6 @@ const Text = forwardRef<typeof MotiText, TextProps>(
         })
         return (
             <MotiText
-
                 from={from}
                 animate={animate}
                 exit={exit}
