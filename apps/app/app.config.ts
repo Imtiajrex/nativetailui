@@ -37,6 +37,8 @@ export default {
 		},
 		plugins: [
 			"expo-router",
+			"expo-asset",
+			"expo-font"
 		],
 		extra: {
 			router: {

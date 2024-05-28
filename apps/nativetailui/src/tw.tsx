@@ -51,11 +51,6 @@ export const useTwContext = () => {
 }
 export const useTw = () => {
 	const twContext = useContext(ThemeContext);
-	// const twFromStore = useTwStore((s) => s.tw);
-	// if (twFromStore) {
-	// 	return twFromStore;
-
-	// }
 	if (!twContext.tw) {
 		console.error("No tw context found");
 		return create(require('../tailwind.config.js'))
@@ -85,7 +80,6 @@ export const separateClasses = (className: string) => {
 			const classValue = predefinedAnimationClasses[
 				c as keyof typeof predefinedAnimationClasses
 			] + " ";
-			console.log("found predefined animation class", classValue)
 
 			classes.push(...classValue.split(' '));
 		} else {
