@@ -88,6 +88,11 @@ const Button = ({
             disabled={disabled || loading}
             animate={animate}
             style={tw`${nonAnimatableClasses}`}
+            containerStyle={tw`flex-1`}
+            transition={{
+                type: "timing",
+                duration: 150,
+            }}
             {...props}
         >
             {leftElement}
@@ -98,7 +103,10 @@ const Button = ({
                 />
             )}
             {isText && (
-                <Text style={tw.style("text-sm text-center font-medium ", textClasses)}>
+                <Text style={tw.style("text-sm text-center font-medium  select-none", textClasses)}
+                    stylePriority="animate"
+                    selectable={false}
+                >
                     {children || text}
                 </Text>
             )}

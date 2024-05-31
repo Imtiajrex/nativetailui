@@ -35,6 +35,10 @@ const Pressable = ({
         <MotiPressable
             animate={animate}
             style={tw`${nonAnimatableClasses}`}
+            transition={{
+                type: "timing",
+                duration: 150,
+            }}
             {...props}
         >
             {isText && (
