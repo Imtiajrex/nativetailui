@@ -4,6 +4,7 @@ import { Text } from "../text";
 
 import { MotiPressable, MotiPressableProps } from "moti/interactions";
 import usePressableStyle from "../../hooks/usePressableStyle";
+import GroupProvider from "../../contexts/GroupContext";
 
 type PressableProps = MotiPressableProps &
 {
@@ -32,23 +33,27 @@ const Pressable = ({
         className: className
     })
     return (
-        <MotiPressable
-            animate={animate}
-            style={tw`${nonAnimatableClasses}`}
-            transition={{
-                type: "timing",
-                duration: 150,
-            }}
-            {...props}
-        >
-            {isText && (
-                <Text style={tw.style(textClasses)}>
-                    {children || text}
-                </Text>
-            )}
+        <GroupProvider isGroup={
+            className.includes("group")
+        }>
+            <MotiPressable
+                animate={animate}
+                style={tw`${nonAnimatableClasses}`}
+                transition={{
+                    type: "timing",
+                    duration: 150,
+                }}
+                {...props}
+            >
+                {isText && (
+                    <Text style={tw.style(textClasses)}>
+                        {children || text}
+                    </Text>
+                )}
 
-            {!isText && children}
-        </MotiPressable>
+                {!isText && children}
+            </MotiPressable>
+        </GroupProvider>
     );
 };
 export {

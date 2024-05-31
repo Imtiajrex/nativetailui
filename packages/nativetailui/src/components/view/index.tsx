@@ -1,4 +1,3 @@
-import useAnimatedStyle, { AnimatedClassProps } from "../../hooks/useAnimatedStyle";
 import { MotiView } from "moti";
 import React, { forwardRef } from "react";
 import {
@@ -6,20 +5,21 @@ import {
     ViewStyle
 } from "react-native";
 import { Text } from "../../..";
-import { useTw } from "../../tw";
+import { AnimatedClassProps, useAnimatedStyle, useGroupedAnimatedStyle } from "../../hooks/useAnimatedStyle";
+import { useInGroup } from "../../contexts/GroupContext";
 
 type ViewProps = React.ComponentProps<typeof NativeView> & AnimatedClassProps<ViewStyle>
-const View = forwardRef<NativeView, ViewProps>(
-    ({ children, ...props }, ref) => {
-        const tw = useTw();
 
 
-        const { from, animate, exit, style, textClasses } = useAnimatedStyle({
-            className: props.className,
+const GroupView = forwardRef<typeof MotiView, ViewProps>(
+    ({ className = "text-foreground", children, ...props }, ref) => {
+
+        const { from, animate, exit, style } = useGroupedAnimatedStyle({
+            className: className,
             style: props.style,
             animate: props.animate,
             animatedClass: props.animatedClass
-        });
+        })
         return (
             <MotiView
                 from={from}
@@ -27,7 +27,32 @@ const View = forwardRef<NativeView, ViewProps>(
                 exit={exit}
                 style={style}
                 {...props}
+                ref={ref}
+            >
+                {children}
+            </MotiView>
+        );
+    }
+);
 
+const BaseView = forwardRef<typeof MotiView, ViewProps>(
+    ({ className = "text-foreground", children, ...props }, ref) => {
+
+        const { from, animate, exit, style, textClasses } = useAnimatedStyle({
+            className: className,
+            style: props.style,
+            animate: props.animate,
+            animatedClass: props.animatedClass
+        })
+
+        return (
+            <MotiView
+                from={from}
+                animate={animate}
+                exit={exit}
+                style={style}
+                {...props}
+                ref={ref}
             >
                 {React.Children.map(children, (child) => {
                     if (typeof child == "string") {
@@ -36,9 +61,18 @@ const View = forwardRef<NativeView, ViewProps>(
                     return child;
                 })}
             </MotiView>
-        )
-
+        );
     }
+);
+const View = forwardRef<typeof MotiView, ViewProps>(
+    (props, ref) => {
+        const inGroup = useInGroup();
+        if (inGroup) {
+            return <GroupView {...props} ref={ref} />;
+        }
+        return <BaseView {...props} ref={ref} />;
+    }
+
 );
 export {
     View

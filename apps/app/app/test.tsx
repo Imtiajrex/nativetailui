@@ -1,8 +1,10 @@
 import { router } from 'expo-router'
 import { AnimatePresence } from 'moti'
 import { Button, Text, View } from 'nativetailui'
+import { useState } from 'react'
 
 export default function Index() {
+    const [state, setState] = useState(0)
 
     return (
         <AnimatePresence presenceAffectsLayout exitBeforeEnter>
@@ -26,12 +28,16 @@ export default function Index() {
                         Go Back
                     </Button>
                     <Button
-                        className='text-black scale-100 hover:scale-105 active:scale-95 w-full '
+                        className={
+                            `text-black font-medium scale-100 hover:scale-105 active:scale-95 w-full ${state % 2 === 0 ? 'bg-primary' : 'bg-secondary'
+                            }`
+                        }
                         onPress={() => {
-                            console.log('Test button pressed')
+
+                            setState(state + 1)
                         }}
                     >
-                        Test Button
+                        Counter {state}
                     </Button>
                 </View>
             </View>

@@ -1,9 +1,9 @@
-import { MotiProps } from 'moti';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { SharedValue, runOnJS, runOnUI, useAnimatedReaction, useDerivedValue, useSharedValue } from 'react-native-reanimated';
-import { getTw, separateClasses, useTw } from '../..';
+import { MotiProps, UseAnimationState } from 'moti';
 import { useMotiPressable } from 'moti/interactions';
 import { useMemo } from 'react';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { SharedValue, runOnJS, useAnimatedReaction, useDerivedValue, useSharedValue } from 'react-native-reanimated';
+import { separateClasses, useTw } from '../..';
 
 export type AnimatedClassProps<T extends ViewStyle | TextStyle> = {
     className?: string;
@@ -12,7 +12,7 @@ export type AnimatedClassProps<T extends ViewStyle | TextStyle> = {
     animatedClass?: Readonly<SharedValue<string>>;
     isText?: boolean;
 }
-export default function useAnimatedStyle<T extends ViewStyle | TextStyle>({
+export function useGroupedAnimatedStyle<T extends ViewStyle | TextStyle>({
     className = "",
     style,
     animate,
@@ -20,7 +20,7 @@ export default function useAnimatedStyle<T extends ViewStyle | TextStyle>({
     isText
 }: AnimatedClassProps<T>) {
     const tw = (useTw());
-    const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses, groupHoverClasses, groupActiveClasses } = separateClasses(className, isText);
+    const { animatableClasses, groupHoverClasses, groupActiveClasses } = separateClasses(className, isText);
     const groupHoverStyles = useMemo(() => tw.style(groupHoverClasses), [groupHoverClasses])
     const groupActiveStyles = useMemo(() => tw.style(groupActiveClasses), [groupActiveClasses])
     const animatableStyles = useMemo(() => tw.style(animatableClasses), [animatableClasses])
@@ -38,6 +38,31 @@ export default function useAnimatedStyle<T extends ViewStyle | TextStyle>({
         groupHoverStyles,
         animatableStyles
     ])
+    const animatedStyle = useAnimatedStyle({
+        className,
+        style,
+        animate,
+        animatedClass,
+        isText,
+        state
+    })
+    return animatedStyle;
+
+}
+export const useAnimatedStyle = <T extends ViewStyle | TextStyle>({
+    className = "",
+    style,
+    animate,
+    animatedClass,
+    isText,
+    state
+}: AnimatedClassProps<T> & {
+    state?: Pick<UseAnimationState<any>, "__state"> | undefined
+}) => {
+    const tw = (useTw());
+    const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses } = separateClasses(className, isText);
+
+
 
     const parse = (...classes: string[]) => {
 

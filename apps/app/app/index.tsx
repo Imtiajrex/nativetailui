@@ -34,7 +34,7 @@ export default function Index() {
                 >
                     Click me!
                 </Button>
-                <Pressable className='flex-row items-center gap-2 bg-blue-500 rounded-xl px-6 py-4 hover:scale-105 scale-100 active:scale-95 hover:bg-blue-400 active:bg-white'
+                <Pressable className='flex-row items-center gap-2 bg-blue-500 rounded-xl px-6 py-4 hover:scale-105 scale-100 active:scale-95 hover:bg-blue-400 active:bg-white group'
                     onPress={() => {
                         router.push('test')
                     }}
