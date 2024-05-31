@@ -103,8 +103,7 @@ const Button = ({
                 />
             )}
             {isText && (
-                <Text style={tw.style("text-sm text-center font-medium  select-none", textClasses)}
-                    stylePriority="animate"
+                <Text style={tw.style("text-sm text-center font-medium ", textClasses)}
                     selectable={false}
                 >
                     {children || text}

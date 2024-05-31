@@ -86,7 +86,9 @@ export const separateClasses = (className: string, isText = false) => {
 			classes.push(c)
 		}
 	});
-	const textClasses = isText ? classes.join(' ') : classes.filter((c) => c.startsWith("text-") || c.startsWith("font-")).join(" ");
+	const textClasses = isText ? classes.join(' ') : classes.filter((c) =>
+		textClassPrefixSet.some((nc) => c.startsWith(nc))
+	).join(" ");
 	const otherClasses = isText ? classes.join(' ') : classes.filter((c) => !c.startsWith("text-") || !c.startsWith("font-")).join(" ");
 	const animatableClasses = classes.filter((c) => nonAnimatedClassesSet.every((nc) => !c.startsWith(nc))).join(" ");
 	const hoverClasses = classes.filter((c) => c.startsWith("hover:")).map((c) => c.replace("hover:", "")).join(" ");
@@ -100,6 +102,12 @@ export const separateClasses = (className: string, isText = false) => {
 
 	return { textClasses, animatableClasses, otherClasses, hoverClasses, activeClasses, nonStateClasses, inClasses, outClasses, nonAnimatableClasses, groupHoverClasses, groupActiveClasses };
 };
+const textClassPrefixSet = [
+	"text-",
+	"font-",
+	"leading-",
+
+]
 const predefinedAnimationClasses = {
 	"fade-in": "in:opacity-100 opacity-100",
 	"fade-out": "out:opacity-0 opacity-100",
