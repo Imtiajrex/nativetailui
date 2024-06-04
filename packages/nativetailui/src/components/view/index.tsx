@@ -5,8 +5,9 @@ import {
     ViewStyle
 } from "react-native";
 import { Text } from "../../..";
-import { AnimatedClassProps, useAnimatedStyle, useGroupedAnimatedStyle } from "../../hooks/useAnimatedStyle";
 import { useInGroup } from "../../contexts/GroupContext";
+import { AnimatedClassProps, useAnimatedStyle, useGroupedAnimatedStyle } from "../../hooks/useAnimatedStyle";
+import { useAnimatedReaction } from "react-native-reanimated";
 
 type ViewProps = React.ComponentProps<typeof NativeView> & AnimatedClassProps<ViewStyle>
 

@@ -1,6 +1,6 @@
 import { MotiProps, UseAnimationState } from 'moti';
 import { useMotiPressable } from 'moti/interactions';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { SharedValue, runOnJS, useAnimatedReaction, useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { separateClasses, useTw } from '../..';
@@ -60,7 +60,10 @@ export const useAnimatedStyle = <T extends ViewStyle | TextStyle>({
     state?: Pick<UseAnimationState<any>, "__state"> | undefined
 }) => {
     const tw = (useTw());
-    const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses } = separateClasses(className, isText);
+    const { textClasses, animatableClasses, inClasses, outClasses, nonAnimatableClasses } = useMemo(() => separateClasses(className, isText), [
+        className,
+        isText
+    ]);
 
 
 
@@ -68,6 +71,7 @@ export const useAnimatedStyle = <T extends ViewStyle | TextStyle>({
 
         if (tw) {
             parsedStyle.value = tw.style(...classes)
+            console.log("parsedStyle", parsedStyle.value)
         }
 
 
@@ -78,11 +82,15 @@ export const useAnimatedStyle = <T extends ViewStyle | TextStyle>({
             animatedClass?.value ?? "",
         )
     )
+    useEffect(() => {
+        parse(animatableClasses, animatedClass?.value ?? "")
+    }, [animatableClasses])
     useAnimatedReaction(() => {
         return animatedClass?.value
     }, (value) => {
-        runOnJS(parse)(animatableClasses, value || '')
-    }, [])
+        if (value)
+            runOnJS(parse)(animatableClasses, value || '')
+    }, [animatableClasses])
     const animatedStyle = useDerivedValue(() => {
         return {
 

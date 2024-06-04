@@ -2,7 +2,7 @@ import { router } from 'expo-router'
 import { AnimatePresence } from 'moti'
 import { Button, Pressable, Text, View } from 'nativetailui'
 import { useEffect } from 'react'
-import { useDerivedValue, useSharedValue } from 'react-native-reanimated'
+import { useDerivedValue, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
 import { create } from 'zustand'
 
 const useOpenStore = create<{
@@ -14,15 +14,14 @@ const useOpenStore = create<{
 )
 export default function Index() {
 
+
     return (
         <AnimatePresence presenceAffectsLayout exitBeforeEnter>
             <View className='p-4 pt-12 items-center justify-center flex-col gap-4 bg-background max-w-2xl mx-auto w-full'>
                 <Text className='text-2xl fade-in-up' >Hello, world!</Text>
 
                 <View className='bg-card p-3 rounded-xl items-center gap-2 w-full h-44'>
-                    <View
-                        className='w-20 h-20 bg-primary rounded-full mb-2  fade-in-right'
-                    />
+                    <Circle />
                     <Text className='text-lg fade-in-up'>This is a card</Text>
                 </View>
 
@@ -49,18 +48,28 @@ export default function Index() {
                     </Text>
                 </Pressable>
 
-                <Presence />
+                {/* <Presence /> */}
             </View>
         </AnimatePresence>
+    )
+}
+const Circle = () => {
+    const open = useOpenStore(state => state.open)
+    return (
+        <View
+            className={
+                `w-20 h-20 rounded-full mb-2  fade-in-right border-2 ${open ? 'bg-primary border-blue-500' : 'bg-green-500 border-black'}`
+            }
+        />
     )
 }
 const Rotator = () => {
     const rotate = useSharedValue(0)
     useEffect(() => {
-        const interval = setInterval(() => {
-            rotate.value = rotate.value + 5
-        }, 50)
-        return () => clearInterval(interval)
+        rotate.value = withRepeat(
+            withTiming(360, { duration: 1000 }),
+            -1,
+        )
     }, [])
     const animatedClass = useDerivedValue(() => {
         if (rotate.value > 150) rotate.value = 0
@@ -79,7 +88,6 @@ const Rotator = () => {
 }
 const Presence = () => {
     const open = useOpenStore(state => state.open)
-    console.log("open", open)
     return (
         <AnimatePresence
             exitBeforeEnter
