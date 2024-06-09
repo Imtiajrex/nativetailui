@@ -71,7 +71,6 @@ export const useAnimatedStyle = <T extends ViewStyle | TextStyle>({
 
         if (tw) {
             parsedStyle.value = tw.style(...classes)
-            console.log("parsedStyle", parsedStyle.value)
         }
 
 
