@@ -1,4 +1,3 @@
-import { Feather } from "@expo/vector-icons";
 import React from "react";
 import {
 	ActivityIndicator,
@@ -9,6 +8,7 @@ import {
 import { getTWColor, useTw } from "./tw";
 import { useCallback, useMemo } from "react";
 import { Text, View } from "..";
+import { Iconify } from "react-native-iconify";
 
 
 const Badge = ({
@@ -102,8 +102,8 @@ const Checkbox = ({
 				className
 			)}
 		>
-			<Feather
-				name="check"
+			<Iconify
+				icon="bi:check"
 				size={iconSize}
 				style={tw.style(checked ? iconActiveClass : iconInactiveClass)}
 			/>
