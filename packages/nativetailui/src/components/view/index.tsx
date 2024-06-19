@@ -1,81 +1,72 @@
+import { renderChildren } from "../../utils/renderChildren";
 import { MotiView } from "moti";
 import React, { forwardRef } from "react";
-import {
-    View as NativeView,
-    ViewStyle
-} from "react-native";
-import { Text } from "../../..";
+import { View as NativeView, ViewStyle } from "react-native";
 import { useInGroup } from "../../contexts/GroupContext";
-import { AnimatedClassProps, useAnimatedStyle, useGroupedAnimatedStyle } from "../../hooks/useAnimatedStyle";
-import { useAnimatedReaction } from "react-native-reanimated";
+import {
+	AnimatedClassProps,
+	useAnimatedStyle,
+	useGroupedAnimatedStyle,
+} from "../../hooks/useAnimatedStyle";
 
-type ViewProps = React.ComponentProps<typeof NativeView> & AnimatedClassProps<ViewStyle>
-
+type ViewProps = React.ComponentProps<typeof NativeView> &
+	AnimatedClassProps<ViewStyle>;
 
 const GroupView = forwardRef<typeof MotiView, ViewProps>(
-    ({ className = "text-foreground", children, ...props }, ref) => {
-
-        const { from, animate, exit, style } = useGroupedAnimatedStyle({
-            className: className,
-            style: props.style,
-            animate: props.animate,
-            animatedClass: props.animatedClass
-        })
-        return (
-            <MotiView
-                from={from}
-                animate={animate}
-                exit={exit}
-                style={style}
-                {...props}
-                ref={ref}
-            >
-                {children}
-            </MotiView>
-        );
-    }
+	({ className = "text-foreground", children, ...props }, ref) => {
+		const { from, animate, exit, style, textClasses } = useGroupedAnimatedStyle(
+			{
+				className: className,
+				style: props.style,
+				animate: props.animate,
+				animatedClass: props.animatedClass,
+				isText: false,
+			}
+		);
+		return (
+			<MotiView
+				from={from}
+				animate={animate}
+				exit={exit}
+				style={style}
+				{...props}
+				ref={ref}
+			>
+				{renderChildren(children, textClasses)}
+			</MotiView>
+		);
+	}
 );
 
 const BaseView = forwardRef<typeof MotiView, ViewProps>(
-    ({ className = "text-foreground", children, ...props }, ref) => {
+	({ className = "text-foreground", children, ...props }, ref) => {
+		const { from, animate, exit, style, textClasses } = useAnimatedStyle({
+			className: className,
+			style: props.style,
+			animate: props.animate,
+			animatedClass: props.animatedClass,
+			isText: false,
+		});
 
-        const { from, animate, exit, style, textClasses } = useAnimatedStyle({
-            className: className,
-            style: props.style,
-            animate: props.animate,
-            animatedClass: props.animatedClass
-        })
-
-        return (
-            <MotiView
-                from={from}
-                animate={animate}
-                exit={exit}
-                style={style}
-                {...props}
-                ref={ref}
-            >
-                {React.Children.map(children, (child) => {
-                    if (typeof child == "string") {
-                        return <Text className={textClasses}>{child}</Text>;
-                    }
-                    return child;
-                })}
-            </MotiView>
-        );
-    }
+		return (
+			<MotiView
+				from={from}
+				animate={animate}
+				exit={exit}
+				style={style}
+				{...props}
+				ref={ref}
+			>
+				{renderChildren(children, textClasses)}
+			</MotiView>
+		);
+	}
 );
-const View = forwardRef<typeof MotiView, ViewProps>(
-    (props, ref) => {
-        const inGroup = useInGroup();
-        if (inGroup) {
-            return <GroupView {...props} ref={ref} />;
-        }
-        return <BaseView {...props} ref={ref} />;
-    }
-
-);
-export {
-    View
-};
-
+const View = forwardRef<typeof MotiView, ViewProps>((props, ref) => {
+	const inGroup = useInGroup();
+	if (inGroup) {
+		return <GroupView {...props} ref={ref} />;
+	}
+	return <BaseView {...props} ref={ref} />;
+});
+export { View };

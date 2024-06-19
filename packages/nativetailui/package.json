@@ -1,48 +1,48 @@
 {
-  "name": "nativetailui",
-  "version": "0.1.4",
-  "description": "",
-  "main": "index.ts",
-  "scripts": {},
-  "author": "Imtiaj Bin Aoual <imtiajbinaoual@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "react",
-    "react-native",
-    "ui",
-    "tailwindcss",
-    "tailwind",
-    "tailwindcss-react-native",
-    "twrnc",
-    "tailwind-react-native",
-    "tailwind-rn"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Imtiajrex/nativetailui.git"
-  },
-  "peerDependencies": {
-    "class-variance-authority": "^0.7.0",
-    "expo-checkbox": "^2.7.0",
-    "expo-linear-gradient": "^12.7.2",
-    "react": "18.2.0",
-    "react-hook-form": "^7.51.0",
-    "react-native": "0.73.4",
-    "react-native-circular-progress-indicator": "^4.4.2",
-    "react-native-date-picker": "^4.4.2",
-    "react-native-linear-gradient": "^2.8.3",
-    "react-native-modal": "^13.0.1",
-    "react-native-timer-picker": "^1.6.0",
-    "zustand": "^4.5.2"
-  },
-  "dependencies": {
-    "@expo/vector-icons": "^14.0.2",
-    "@miblanchard/react-native-slider": "^2.6.0",
-    "class-variance-authority": "^0.7.0",
-    "moti": "^0.29.0",
-    "react-native-circular-progress-indicator": "^4.4.2",
-    "react-native-iconify": "^1.0.2",
+	"name": "nativetailui",
+	"version": "0.1.6",
+	"description": "",
+	"main": "index.ts",
+	"scripts": {},
+	"author": "Imtiaj Bin Aoual <imtiajbinaoual@gmail.com>",
+	"license": "MIT",
+	"keywords": [
+		"react",
+		"react-native",
+		"ui",
+		"tailwindcss",
+		"tailwind",
+		"tailwindcss-react-native",
+		"twrnc",
+		"tailwind-react-native",
+		"tailwind-rn"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Imtiajrex/nativetailui.git"
+	},
+	"peerDependencies": {
+		"class-variance-authority": "^0.7.0",
+		"expo-checkbox": "^2.7.0",
+		"expo-linear-gradient": "^12.7.2",
+		"react": "18.2.0",
+		"react-hook-form": "^7.51.0",
+		"react-native": "0.73.4",
+		"react-native-circular-progress-indicator": "^4.4.2",
+		"react-native-date-picker": "^4.4.2",
+		"react-native-linear-gradient": "^2.8.3",
+		"react-native-modal": "^13.0.1",
+		"react-native-timer-picker": "^1.6.0",
+		"zustand": "^4.5.2"
+	},
+	"dependencies": {
+		"@expo/vector-icons": "^14.0.2",
+		"@miblanchard/react-native-slider": "^2.6.0",
+		"class-variance-authority": "^0.7.0",
+		"moti": "^0.29.0",
+		"react-native-circular-progress-indicator": "^4.4.2",
+		"react-native-iconify": "^1.0.2",
 		"react-native-reanimated": "~3.10.1",
-    "zustand": "^4.5.2"
-  }
+		"zustand": "^4.5.2"
+	}
 }

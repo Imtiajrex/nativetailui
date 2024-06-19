@@ -1,62 +1,40 @@
 import React from "react";
 import { useTw } from "../../tw";
-import { Text } from "../text";
 
+import { renderChildren } from "../../utils/renderChildren";
 import { MotiPressable, MotiPressableProps } from "moti/interactions";
-import usePressableStyle from "../../hooks/usePressableStyle";
 import GroupProvider from "../../contexts/GroupContext";
+import usePressableStyle from "../../hooks/usePressableStyle";
 
-type PressableProps = MotiPressableProps &
-{
-    text?: string;
-    textClass?: string;
-    className?: string;
-    children?: React.ReactNode;
+type PressableProps = MotiPressableProps & {
+	textClass?: string;
+	className?: string;
+	children?: React.ReactNode;
 };
 
-const Pressable = ({
-    text,
-    children,
-    className = '',
-    ...props
-}: PressableProps) => {
-    const tw = useTw();
+const Pressable = ({ children, className = "", ...props }: PressableProps) => {
+	const tw = useTw();
 
+	const { animate, textClasses, nonAnimatableClasses, containerStyle } =
+		usePressableStyle({
+			className: className,
+		});
 
-    const isText = !!text || typeof children == "string";
-    const {
-        animate,
-        textClasses,
-        nonAnimatableClasses
-
-    } = usePressableStyle({
-        className: className
-    })
-    return (
-        <GroupProvider isGroup={
-            className.includes("group")
-        }>
-            <MotiPressable
-                animate={animate}
-                style={tw`${nonAnimatableClasses}`}
-                transition={{
-                    type: "timing",
-                    duration: 150,
-                }}
-                {...props}
-            >
-                {isText && (
-                    <Text style={tw.style(textClasses)}>
-                        {children || text}
-                    </Text>
-                )}
-
-                {!isText && children}
-            </MotiPressable>
-        </GroupProvider>
-    );
+	return (
+		<GroupProvider isGroup={className.includes("group")}>
+			<MotiPressable
+				animate={animate}
+				style={tw`${nonAnimatableClasses}`}
+				transition={{
+					type: "timing",
+					duration: 150,
+				}}
+				containerStyle={[containerStyle, props.containerStyle!] as any}
+				{...props}
+			>
+				{renderChildren(children, textClasses)}
+			</MotiPressable>
+		</GroupProvider>
+	);
 };
-export {
-    Pressable
-};
-
+export { Pressable };
